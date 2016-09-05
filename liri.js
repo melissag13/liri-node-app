@@ -11,10 +11,10 @@ var request = require("request");
 
 function mytweets(){
 	var client = new Twitter({
-	  consumer_key: "",
-	  consumer_secret: "",
-	  access_token_key: "",
-	  access_token_secret: ""
+		consumer_key: keys.twitterKeys.consumer_key,
+		consumer_secret: keys.twitterKeys.consumer_secret,
+		access_token_key: keys.twitterKeys.access_token_key,
+		access_token_secret: keys.twitterKeys.access_token_secret
 });
  
 var params = {screen_name: "melissag131"};
@@ -95,10 +95,38 @@ function dowhatitsays(){
 			console.log(data);
 		// Then split it by commas (to make it more readable)
 		var dataArr = data.split(',');
+			if (dataArr.length == 2){
+				pick(dataArr[0], dataArr[1]);
+			} else if (dataArr.length == 1){
+				pick(dataArr[0]);
+		}
 			// We will then re-display the content with the split for aesthetics.
 			console.log(dataArr);
 	});
 };
+// var pick = function(caseData, functionData){
+// 	switch(caseData) {
+// 		case 'my-tweets':
+// 			getMyTweets();
+// 			break;
+// 		case 'spotify-this-song':
+// 			getMeSpotify(functionData);
+// 			break;
+// 		case 'movie-this':
+// 			getMeMovie(functionData);
+// 			break;
+// 		case 'do-what-it-says':
+// 			doWhatItSays();
+// 			break;
+// 		default:
+// 			console.log('LIRI doesn\'t know that');
+// 	}
+// }
+// var runThis = function(argOne, argTwo){
+// 	pick(argOne, argTwo);
+// };
+// runThis(process.argv[2], process.argv[3]);
+
 mytweets();
 spotifythissong();
 moviethis();

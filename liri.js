@@ -9,6 +9,14 @@ var spotify = require("spotify");
 // Grab the request package...
 var request = require("request");
 
+var liriArg = process.argv[2];
+	switch(liriArg) {
+		case "my-tweets": myTweets(); break;
+		case "spotify-this-song": spotifyThisSong(); break;
+		case "movie-this": movieThis(); break;
+		case "do-what-it-says": doWhatItSays(); break;
+	};
+
 function mytweets(){
 	var client = new Twitter({
 		consumer_key: keys.twitterKeys.consumer_key,
@@ -16,39 +24,51 @@ function mytweets(){
 		access_token_key: keys.twitterKeys.access_token_key,
 		access_token_secret: keys.twitterKeys.access_token_secret
 });
+var twitterUsername = process.argv[3];
+		if(!twitterUsername){
+			twitterUsername = "melissag131";
+		}	
  
-var params = {screen_name: "melissag131"};
+var params = {screen_name: twitterUsername};
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
-	  if (!error) {
-	    console.log(tweets);
-	    for(var i=0; i < tweets.length; i++){
-			console.log(tweets[i].created_at);
-			console.log('');
-			console.log(tweets[i].text);
+	  	if (!error) {
+	    	console.log(tweets);
+	    	for(var i=0; i < tweets.length; i++){
+				console.log(tweets[i].created_at);
+				console.log('');
+				console.log(tweets[i].text);
 			}
-	  }
+	}	else {
+				console.log("Error :"+ error);
+				return;
+			}
 
 	});
 };
 
 function spotifythissong(songName){
-	if (songName === undefined){
-		songName = "The Sign by Ace of Base";
-		}
-
-	spotify.search({ type: "track", query: songName }, function(err, data) {
+	var songName = process.argv[3];
+		if (songName === undefined){
+			songName = "The Sign by Ace of Base";
+			}
+	params = songName;		
+	spotify.search({ type: "track", query: params }, function(err, data) {
     	if ( err ) {
-        console.log("Error occurred: " + err);
-        return;
+        	
+		    var songs = data.tracks.items;
+				for(var i = 0; i < songs.length; i++){
+					console.log(i);
+					console.log("artist(s): " + songs[i].artists.map(getArtistNames));
+					console.log("song name: " + songs[i].name);
+					console.log("preview song: " + songs[i].preview_url);
+					console.log("album: " + songs[i].album.name);
+					console.log("-----------------------------------");
     }
- 	var songs = data.tracks.items;
-		for(var i = 0; i < songs.length; i++){
-		console.log(i);
-		console.log("artist(s): " + songs[i].artists.map(getArtistNames));
-		console.log("song name: " + songs[i].name);
-		console.log("preview song: " + songs[i].preview_url);
-		console.log("album: " + songs[i].album.name);
-		console.log("-----------------------------------");
+ 	
+		
+		}	else {
+				console.log("Error :"+ err);
+				return;
 	}
     
 });
@@ -56,10 +76,11 @@ function spotifythissong(songName){
 };
 
 function moviethis(){
+	var movie = process.argv[3];
 	if (movieName === undefined) {
 		movieName = "Mr. Nobody";
 	} 
-
+	params = movieName
 	// Run the request function to the OMDB API with the movie specified
 	// The request function takes in a URL then returns three arguments:
 	// 1. It provides an error if one exists.
@@ -81,7 +102,11 @@ function moviethis(){
 				console.log("Actors in the movie: " + jsonData.Actors);
 				console.log("Rotten Tomatoes Rating: " + jsonData.tomatoRating);
 				console.log("Rotten Tomatoes URL: " + jsonData.tomatoURL);
-		}
+
+		}	else {
+				console.log("Error :"+ error);
+				return;
+			}
 	
 });
 
@@ -104,30 +129,5 @@ function dowhatitsays(){
 			console.log(dataArr);
 	});
 };
-// var pick = function(caseData, functionData){
-// 	switch(caseData) {
-// 		case 'my-tweets':
-// 			getMyTweets();
-// 			break;
-// 		case 'spotify-this-song':
-// 			getMeSpotify(functionData);
-// 			break;
-// 		case 'movie-this':
-// 			getMeMovie(functionData);
-// 			break;
-// 		case 'do-what-it-says':
-// 			doWhatItSays();
-// 			break;
-// 		default:
-// 			console.log('LIRI doesn\'t know that');
-// 	}
-// }
-// var runThis = function(argOne, argTwo){
-// 	pick(argOne, argTwo);
-// };
-// runThis(process.argv[2], process.argv[3]);
 
-mytweets();
-spotifythissong();
-moviethis();
-dowhatitsays();
+

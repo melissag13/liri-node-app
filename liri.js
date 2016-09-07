@@ -11,10 +11,10 @@ var request = require("request");
 
 var liriArg = process.argv[2];
 	switch(liriArg) {
-		case "my-tweets": myTweets(); break;
-		case "spotify-this-song": spotifyThisSong(); break;
-		case "movie-this": movieThis(); break;
-		case "do-what-it-says": doWhatItSays(); break;
+		case "mytweets": myTweets(); break;
+		case "spotifythissong": spotifyThisSong(); break;
+		case "moviethis": movieThis(); break;
+		case "dowhatitsays": doWhatItSays(); break;
 	};
 
 function mytweets(){

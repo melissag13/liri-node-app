@@ -11,38 +11,36 @@ var request = require("request");
 
 var liriArg = process.argv[2];
 	switch(liriArg) {
-		case "mytweets": myTweets(); break;
+		case "myTweets": myTweets(); break;
 		case "spotifythissong": spotifyThisSong(); break;
 		case "moviethis": movieThis(); break;
 		case "dowhatitsays": doWhatItSays(); break;
 	};
 
-function mytweets(){
-	var client = new Twitter({
-		consumer_key: keys.twitterKeys.consumer_key,
-		consumer_secret: keys.twitterKeys.consumer_secret,
-		access_token_key: keys.twitterKeys.access_token_key,
-		access_token_secret: keys.twitterKeys.access_token_secret
-});
-var twitterUsername = process.argv[3];
+function myTweets(){
+	var client = new Twitter(keys.twitterKeys)
+
+	var twitterUsername = process.argv[3];
 		if(!twitterUsername){
 			twitterUsername = "melissag131";
 		}	
  
-var params = {screen_name: twitterUsername};
-	client.get('statuses/user_timeline', params, function(error, tweets, response) {
-	  	if (!error) {
-	    	console.log(tweets);
-	    	for(var i=0; i < tweets.length; i++){
-				console.log(tweets[i].created_at);
-				console.log('');
-				console.log(tweets[i].text);
-			}
-	}	else {
-				console.log("Error :"+ error);
-				return;
-			}
-
+	var params = {screen_name: twitterUsername};
+		client.get('statuses/user_timeline', params, function(error, tweets, response) {
+	//   		if (!error) {
+	//     	console.log(tweets);
+	//     		for(var i=0; i < tweets.length; i++){
+	// 			console.log(tweets[i].created_at);
+	// 			console.log('');
+	// 			console.log(tweets[i].text);
+	// 		}
+	// }	else {
+	// 			console.log("Error :"+ error);
+	// 			return;
+	// 		}
+		// console.log(error);
+		// console.log(tweets);
+		// console.log(response);
 	});
 };
 

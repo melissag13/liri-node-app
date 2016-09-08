@@ -12,9 +12,9 @@ var request = require("request");
 var liriArg = process.argv[2];
 	switch(liriArg) {
 		case "myTweets": myTweets(); break;
-		case "spotifythissong": spotifyThisSong(); break;
-		case "moviethis": movieThis(); break;
-		case "dowhatitsays": doWhatItSays(); break;
+		case "spotifyThisSong": spotifyThisSong(); break;
+		case "movieThis": movieThis(); break;
+		case "doWhatItSays": doWhatItSays(); break;
 	};
 
 function myTweets(){
@@ -44,7 +44,7 @@ function myTweets(){
 	});
 };
 
-function spotifythissong(songName){
+function spotifyThisSong(songName){
 	var songName = process.argv[3];
 		if (songName === undefined){
 			songName = "The Sign by Ace of Base";
@@ -73,7 +73,7 @@ function spotifythissong(songName){
 
 };
 
-function moviethis(){
+function movieThis(){
 	var movie = process.argv[3];
 	if (movieName === undefined) {
 		movieName = "Mr. Nobody";
@@ -108,7 +108,7 @@ function moviethis(){
 	
 });
 
-function dowhatitsays(){
+function doWhatItSays(){
 
 	// This block of code will read from the "random.txt" file.
 	// It's important to include the "utf8" parameter or the code will provide stream data (garbage)

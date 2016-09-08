@@ -1,77 +1,125 @@
-// Grab the data from keys.js
+// Grab the data from keys.js (./ = look in current folder)
 var keys = require("./keys.js");
-// Includes the FS package for reading and writing packages
-var fs = require("fs");
 
 var Twitter = require("twitter");
-var spotify = require("spotify");
 
-// Grab the request package...
-var request = require("request");
+var client = new Twitter(keys.twitterKeys);
 
-var liriArg = process.argv[2];
-	switch(liriArg) {
-		case "myTweets": myTweets(); break;
-		case "spotifyThisSong": spotifyThisSong(); break;
-		case "movieThis": movieThis(); break;
-		case "doWhatItSays": doWhatItSays(); break;
-	};
-
-function myTweets(){
-	var client = new Twitter(keys.twitterKeys)
-
-	var twitterUsername = process.argv[3];
-		if(!twitterUsername){
-			twitterUsername = "melissag131";
-		}	
- 
-	var params = {screen_name: twitterUsername};
-		client.get('statuses/user_timeline', params, function(error, tweets, response) {
-	  		if (!error) {
-	    	console.log(tweets);
-	    		for(var i=0; i < tweets.length; i++){
-				console.log(tweets[i].created_at);
-				console.log('');
-				console.log(tweets[i].text);
-			}
-	}	else {
-				console.log("Error :"+ error);
-				return;
-			}
-		// console.log(error);
-		// console.log(tweets);
-		// console.log(response);
-	});
-};
-
-function spotifyThisSong(songName){
-	var songName = process.argv[3];
-		if (songName === undefined){
-			songName = "The Sign by Ace of Base";
-			}
-	params = songName;		
-	spotify.search({ type: "track", query: params }, function(err, data) {
-    	if ( err ) {
-        	
-		    var songs = data.tracks.items;
-				for(var i = 0; i < songs.length; i++){
-					console.log(i);
-					console.log("artist(s): " + songs[i].artists.map(getArtistNames));
-					console.log("song name: " + songs[i].name);
-					console.log("preview song: " + songs[i].preview_url);
-					console.log("album: " + songs[i].album.name);
-					console.log("-----------------------------------");
+var params = {screen_name: "melissag131"};
+client.get('statuses/user_timeline', params, function(error, tweets, response) {
+  if (!error) {
+    // console.log(tweets);
+    for(var i=0; i<tweets.length; i++) {
+    	// tweets[i] = whatever tweet position you are at
+    	console.log(tweets[i].created_at);
     }
- 	
-		
-		}	else {
-				console.log("Error :"+ err);
-				return;
-	}
-    
+  }
 });
 
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // Includes the FS package for reading and writing packages
+// var fs = require("fs");
+
+
+
+
+// // Grab the request package...
+// var request = require("request");
+
+// var liriArg = process.argv[2];
+// 	switch(liriArg) {
+// 		case "myTweets": myTweets(); break;
+// 		case "spotifyThisSong": spotifyThisSong(); break;
+// 		case "movieThis": movieThis(); break;
+// 		case "doWhatItSays": doWhatItSays(); break;
+// 	};
+
+// function myTweets(){
+// 	var Twitter = require("twitter");
+// 	var client = new Twitter(keys.twitterKeys)
+
+// 	var twitterUsername = process.argv[3];
+// 		if(!twitterUsername){
+// 			twitterUsername = "melissag131";
+// 		}	
+ 
+// 	var params = {screen_name: twitterUsername};
+// 		client.get('statuses/user_timeline', params, function(error, tweets, response) {
+// 	  		if (!error) {
+// 	    	// console.log(tweets);
+// 	    		for(var i=0; i < tweets.length; i++){
+// 				console.log(tweets[i].created_at);
+// 				console.log('');
+// 				console.log(tweets[i].text);
+// 			}
+// 	}	else {
+// 				console.log("Error :"+ error);
+// 				return;
+// 			}
+// 		// console.log(error);
+// 		// console.log(tweets);
+// 		// console.log(response);
+// 	});
+// };
+
+// function spotifyThisSong(songName){
+// 	var spotify = require("spotify");
+// 	var songName = process.argv[3];
+// 		if (songName === undefined){
+// 			songName = "The Sign by Ace of Base";
+// 			}
+// 	params = songName;		
+// 	spotify.search({ type: "track", query: params }, function(err, data) {
+//     	if (!err) {
+        	
+// 		    var songs = data.tracks.items;
+// 				for(var i = 0; i < songs.length; i++){
+// 					console.log(i);
+// 					console.log("artist(s): " + songs[i].artists);
+// 					console.log("song name: " + songs[i].name);
+// 					console.log("preview song: " + songs[i].preview_url);
+// 					console.log("album: " + songs[i].album.name);
+// 					console.log("-----------------------------------");
+//     }
+ 	
+		
+// 		}	else {
+// 				console.log("Error :"+ err);
+// 				return;
+// 	}
+    
+// });
+
+// };
 
 // function movieThis(){
 // 	var movie = process.argv[3];

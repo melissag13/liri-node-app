@@ -12,6 +12,9 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
     for(var i=0; i<tweets.length; i++) {
     	// tweets[i] = whatever tweet position you are at
     	console.log(tweets[i].created_at);
+      console.log('');
+      console.log(tweets[i].text);
+     
     }
   }
 });
